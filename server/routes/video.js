@@ -106,4 +106,27 @@ router.post("/uploadvideo", (req, res) => {
   });
 });
 
+router.get("/getvideos", (req, res) => {
+  // 클라이언트에서 요청된 비디오들을 mongoDB에서 가져와서 클라이언트로 보낸다.
+  Video.find()
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) {
+        return res.status(400).send(err);
+      }
+      res.status(200).json({ success: true, videos });
+    });
+});
+
+router.post("/getvideodetail", (req, res) => {
+  Video.findOne({ _id: req.body.videoId })
+    .populate("writer")
+    .exec((err, videoDetail) => {
+      if (err) {
+        return res.status(400).send(err);
+      }
+      return res.status(200).json({ success: true, videoDetail });
+    });
+});
+
 module.exports = router;
