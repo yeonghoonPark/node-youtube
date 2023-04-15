@@ -11,7 +11,7 @@ function ReplyComment(props) {
 
     props.commentLists.map((cV) => {
       if (cV.responseTo === props.parentCommentId) {
-        commentNumber++;
+        return commentNumber++;
       }
     });
 
@@ -22,9 +22,9 @@ function ReplyComment(props) {
 
   const renderReplyComment = (parentCommentId) => {
     return props.commentLists.map((cV, i) => (
-      <>
+      <div key={i}>
         {cV.responseTo === parentCommentId && (
-          <div key={i} style={{ width: "80%", marginLeft: "40px" }}>
+          <div style={{ width: "80%", marginLeft: "40px" }}>
             <SingleComment
               refreshFunction={props.refreshFunction}
               comment={cV}
@@ -38,7 +38,7 @@ function ReplyComment(props) {
             />
           </div>
         )}
-      </>
+      </div>
     ));
   };
 
